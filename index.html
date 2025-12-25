@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number One Son Labs | Software Development</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #0f1629 0%, #1a1f3a 50%, #0f1629 100%);
+      min-height: 100vh;
+      color: white;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .logo {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tagline {
+      font-size: 20px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 50px;
+    }
+    .section {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 30px;
+    }
+    .section h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #667eea;
+    }
+    .section p {
+      color: rgba(255,255,255,0.8);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+    .products {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .product {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 30px;
+      width: 260px;
+      transition: all 0.3s;
+    }
+    .product:hover {
+      transform: translateY(-5px);
+      border-color: #667eea;
+    }
+    .product-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+    .product h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .product p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+    }
+    .product a {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .contact {
+      margin-top: 50px;
+      padding: 30px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+    }
+    .contact h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: rgba(255,255,255,0.9);
+    }
+    .contact p {
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+    }
+    .contact a {
+      color: #667eea;
+      text-decoration: none;
+    }
+    footer {
+      margin-top: 60px;
+      color: rgba(255,255,255,0.4);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">👨‍💻</div>
+    <h1>Number One Son Labs</h1>
+    <p class="tagline">Building software that brings people together</p>
+    
+    <div class="section">
+      <h2>About Us</h2>
+      <p>Number One Son Labs is a software development company focused on creating meaningful digital experiences. We build applications that connect people with knowledge, wisdom, and each other. Our products combine cutting-edge AI technology with thoughtful design to create tools that make a real difference.</p>
+    </div>
+    
+    <div class="section">
+      <h2>Our Products</h2>
+      <div class="products">
+        <div class="product">
+          <div class="product-icon">🏛️</div>
+          <h3>ChimeIn</h3>
+          <p>The table where anyone can sit. Have conversations with history's greatest minds.</p>
+          <a href="https://chime-in-azure.vercel.app">Visit ChimeIn</a>
+        </div>
+        <div class="product">
+          <div class="product-icon">🧠</div>
+          <h3>BrainForge</h3>
+          <p>Multi-AI collaboration platform. Four AI minds working together on your problems.</p>
+          <a href="https://brainforge.tech">Visit BrainForge</a>
+        </div>
+        <div class="product">
+          <div class="product-icon">⚡</div>
+          <h3>MultiPowerAI</h3>
+          <p>Bring your own API keys. Same power, your costs. Full control over spending.</p>
+          <a href="https://multipowerai.com">Visit MultiPowerAI</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="contact">
+      <h2>Contact Us</h2>
+      <p>Email: <a href="mailto:support@numberoneson.us">support@numberoneson.us</a></p>
+      <p style="margin-top: 10px;">Based in California, USA</p>
+    </div>
+    
+    <footer>
+      <p>© 2025 Number One Son Labs. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>
