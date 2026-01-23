@@ -1,171 +1,824 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Number One Son Labs | Software Development</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Outfit', sans-serif;
-      background: linear-gradient(135deg, #0f1629 0%, #1a1f3a 50%, #0f1629 100%);
-      min-height: 100vh;
-      color: white;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 60px 20px;
-      text-align: center;
-    }
-    .logo {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 42px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .tagline {
-      font-size: 20px;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 50px;
-    }
-    .section {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
-      padding: 40px;
-      margin-bottom: 30px;
-    }
-    .section h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #667eea;
-    }
-    .section p {
-      color: rgba(255,255,255,0.8);
-      line-height: 1.7;
-      font-size: 16px;
-    }
-    .products {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 30px;
-    }
-    .product {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 16px;
-      padding: 30px;
-      width: 260px;
-      transition: all 0.3s;
-    }
-    .product:hover {
-      transform: translateY(-5px);
-      border-color: #667eea;
-    }
-    .product-icon {
-      font-size: 40px;
-      margin-bottom: 15px;
-    }
-    .product h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-    .product p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.6);
-    }
-    .product a {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-    .contact {
-      margin-top: 50px;
-      padding: 30px;
-      background: rgba(255,255,255,0.03);
-      border-radius: 16px;
-    }
-    .contact h2 {
-      font-size: 20px;
-      margin-bottom: 15px;
-      color: rgba(255,255,255,0.9);
-    }
-    .contact p {
-      color: rgba(255,255,255,0.6);
-      font-size: 14px;
-    }
-    .contact a {
-      color: #667eea;
-      text-decoration: none;
-    }
-    footer {
-      margin-top: 60px;
-      color: rgba(255,255,255,0.4);
-      font-size: 14px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number One Son Software Development</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+        
+        :root {
+            --bg: #0a0a0b;
+            --fg: #e8e8e8;
+            --fg-dim: #6a6a6a;
+            --fg-muted: #3a3a3a;
+            --accent: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* Canvas Layer */
+        #system-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Content Layer */
+        .content-layer {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 3rem;
+            pointer-events: none;
+        }
+
+        .content-layer * {
+            pointer-events: auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .wordmark {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--fg-dim);
+            line-height: 1.6;
+            cursor: pointer;
+            padding: 0.5rem;
+            margin: -0.5rem;
+            transition: color 0.3s ease;
+            user-select: none;
+        }
+
+        .wordmark:hover {
+            color: var(--fg);
+        }
+        
+        .wordmark:active {
+            color: var(--accent);
+        }
+
+        .system-status {
+            font-size: 0.625rem;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--fg-muted);
+            text-align: right;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .system-status.visible {
+            opacity: 1;
+        }
+
+        .status-line {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Hero Copy */
+        .hero {
+            position: absolute;
+            top: 50%;
+            left: 3rem;
+            transform: translateY(-50%);
+            max-width: 560px;
+        }
+
+        .hero h1 {
+            font-size: 1.125rem;
+            font-weight: 400;
+            line-height: 1.7;
+            letter-spacing: -0.01em;
+            color: var(--fg);
+            margin-bottom: 0;
+        }
+
+        .hero h1 .company {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero h1 .descriptor {
+            color: var(--fg-dim);
+            font-weight: 300;
+        }
+
+        /* Product Reveal */
+        .product-reveal {
+            position: fixed;
+            bottom: 6rem;
+            left: 3rem;
+            font-size: 0.8125rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: var(--fg-dim);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease, transform 0.8s ease, color 0.4s ease;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        .product-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-reveal:hover {
+            color: var(--fg);
+        }
+
+        .product-reveal.active {
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .coordinates {
+            font-size: 0.625rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--fg-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .contact {
+            font-size: 0.625rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--fg-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact:hover {
+            color: var(--fg-dim);
+        }
+
+        /* System Notes Panel */
+        .system-notes {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 320px;
+            height: 100%;
+            background: rgba(10, 10, 11, 0.95);
+            border-left: 1px solid var(--fg-muted);
+            padding: 3rem 1.5rem;
+            z-index: 100;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            font-variant-numeric: tabular-nums;
+            overflow-y: auto;
+        }
+
+        .system-notes.open {
+            transform: translateX(0);
+        }
+
+        .system-notes h2 {
+            font-size: 0.625rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--fg-dim);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--fg-muted);
+        }
+
+        .metric-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.5625rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--fg-muted);
+            margin-bottom: 0.375rem;
+        }
+
+        .metric-value {
+            font-size: 0.8125rem;
+            font-weight: 400;
+            color: var(--fg-dim);
+            letter-spacing: 0.02em;
+        }
+
+        .metric-value.mono {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.6875rem;
+        }
+
+        /* Scroll indicator */
+        .scroll-hint {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--fg-muted), transparent);
+            opacity: 0.5;
+            transition: opacity 0.6s ease;
+        }
+
+        .scroll-hint.hidden {
+            opacity: 0;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">👨‍💻</div>
-    <h1>Number One Son Labs</h1>
-    <p class="tagline">Building software that brings people together</p>
-    
-    <div class="section">
-      <h2>About Us</h2>
-      <p>Number One Son Labs is a software development company focused on creating meaningful digital experiences. We build applications that connect people with knowledge, wisdom, and each other. Our products combine cutting-edge AI technology with thoughtful design to create tools that make a real difference.</p>
-    </div>
-    
-    <div class="section">
-      <h2>Our Products</h2>
-      <div class="products">
-        <div class="product">
-          <div class="product-icon">🏛️</div>
-          <h3>ChimeIn</h3>
-          <p>The table where anyone can sit. Have conversations with history's greatest minds.</p>
-          <a href="https://chime-in-azure.vercel.app">Visit ChimeIn</a>
+    <canvas id="system-canvas"></canvas>
+
+    <div class="content-layer">
+        <header>
+            <div class="wordmark">Number One Son<br>Software Development</div>
+            <div class="system-status" id="system-status">
+                <div class="status-line">System Active</div>
+                <div class="status-line" id="render-time">—</div>
+            </div>
+        </header>
+
+        <div class="hero">
+            <h1>
+                <span class="company">Number One Son Software Development</span>
+                <span class="descriptor">We design and deploy intelligent systems.</span>
+            </h1>
         </div>
-        <div class="product">
-          <div class="product-icon">🧠</div>
-          <h3>BrainForge</h3>
-          <p>Multi-AI collaboration platform. Four AI minds working together on your problems.</p>
-          <a href="https://brainforge.tech">Visit BrainForge</a>
-        </div>
-        <div class="product">
-          <div class="product-icon">⚡</div>
-          <h3>MultiPowerAI</h3>
-          <p>Bring your own API keys. Same power, your costs. Full control over spending.</p>
-          <a href="https://multipowerai.com">Visit MultiPowerAI</a>
-        </div>
-      </div>
+
+        <div class="product-reveal" id="product-reveal">Currently shipping: RecoveryLock</div>
+
+        <footer>
+            <div class="coordinates" id="coordinates">0.000 / 0.000</div>
+            <a href="mailto:roger@grubb.net" class="contact">Contact</a>
+        </footer>
     </div>
-    
-    <div class="contact">
-      <h2>Contact Us</h2>
-      <p>Email: <a href="mailto:support@numberoneson.us">support@numberoneson.us</a></p>
-      <p style="margin-top: 10px;">Based in California, USA</p>
+
+    <div class="scroll-hint" id="scroll-hint"></div>
+
+    <div class="system-notes" id="system-notes">
+        <h2>System Notes</h2>
+        <div class="metric-group">
+            <div class="metric-label">Frame Time</div>
+            <div class="metric-value" id="metric-frametime">—</div>
+        </div>
+        <div class="metric-group">
+            <div class="metric-label">Frame Rate</div>
+            <div class="metric-value" id="metric-fps">—</div>
+        </div>
+        <div class="metric-group">
+            <div class="metric-label">Draw Calls</div>
+            <div class="metric-value" id="metric-drawcalls">—</div>
+        </div>
+        <div class="metric-group">
+            <div class="metric-label">Triangles</div>
+            <div class="metric-value" id="metric-triangles">—</div>
+        </div>
+        <div class="metric-group">
+            <div class="metric-label">Node Count</div>
+            <div class="metric-value" id="metric-nodes">—</div>
+        </div>
+        <div class="metric-group">
+            <div class="metric-label">Edge Count</div>
+            <div class="metric-value" id="metric-edges">—</div>
+        </div>
+        <div class="metric-group">
+            <div class="metric-label">Interaction Stability</div>
+            <div class="metric-value" id="metric-stability">—</div>
+        </div>
+        <div class="metric-group">
+            <div class="metric-label">System Mode</div>
+            <div class="metric-value" id="metric-mode">Standard</div>
+        </div>
+        <div class="metric-group">
+            <div class="metric-label">Build</div>
+            <div class="metric-value mono" id="metric-build">—</div>
+        </div>
+        <div class="metric-group">
+            <div class="metric-label">Session</div>
+            <div class="metric-value mono" id="metric-session">—</div>
+        </div>
     </div>
-    
-    <footer>
-      <p>© 2025 Number One Son Labs. All rights reserved.</p>
-    </footer>
-  </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // SYSTEM CONFIGURATION
+        // ═══════════════════════════════════════════════════════════════
+        
+        const CONFIG = {
+            NODE_COUNT: 120,
+            EDGE_DISTANCE_THRESHOLD: 2.8,
+            BASE_ROTATION_SPEED: 0.00008,
+            DAMPING: 0.92,
+            STABILITY_THRESHOLD: 0.015,
+            SECURITY_MODE_NODE_COUNT: 180,
+            BUILD_HASH: 'a7f3e2d',
+            SESSION_ID: crypto.randomUUID().slice(0, 8)
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // STATE
+        // ═══════════════════════════════════════════════════════════════
+        
+        const state = {
+            mouse: { x: 0, y: 0, vx: 0, vy: 0 },
+            scroll: { y: 0, velocity: 0 },
+            stability: 1,
+            timeOnPage: 0,
+            isSecurityMode: false,
+            systemNotesOpen: false,
+            productRevealed: false,
+            hoverStartTime: null,
+            lastFrameTime: performance.now(),
+            frameCount: 0,
+            fps: 60,
+            perspectiveMode: 0, // 0 = spread/flat, 1 = clustered/depth
+            cameraTarget: { x: 0, y: 0, z: 8, rotX: 0, rotY: 0 }
+        };
+
+        // Camera perspective configurations
+        const PERSPECTIVES = [
+            { z: 12, rotX: 0.8, rotY: 0, fov: 60, name: 'Topographic' },      // Spread, looking down
+            { z: 8, rotX: 0.1, rotY: 0, fov: 45, name: 'Isometric' }           // Clustered, eye-level
+        ];
+
+        // ═══════════════════════════════════════════════════════════════
+        // THREE.JS SETUP
+        // ═══════════════════════════════════════════════════════════════
+        
+        const canvas = document.getElementById('system-canvas');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0a0b);
+        scene.fog = new THREE.Fog(0x0a0a0b, 12, 35);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.z = 8;
+
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas, 
+            antialias: true,
+            powerPreference: 'high-performance'
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // ═══════════════════════════════════════════════════════════════
+        // LIGHTING - Physically Plausible
+        // ═══════════════════════════════════════════════════════════════
+        
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
+        scene.add(ambientLight);
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        keyLight.position.set(5, 8, 7);
+        scene.add(keyLight);
+
+        const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
+        fillLight.position.set(-5, 0, 5);
+        scene.add(fillLight);
+
+        const rimLight = new THREE.DirectionalLight(0xffffff, 0.2);
+        rimLight.position.set(0, -5, -5);
+        scene.add(rimLight);
+
+        // ═══════════════════════════════════════════════════════════════
+        // LATTICE STRUCTURE
+        // ═══════════════════════════════════════════════════════════════
+        
+        class LatticeSystem {
+            constructor(nodeCount) {
+                this.nodeCount = nodeCount;
+                this.nodes = [];
+                this.edges = [];
+                this.nodeGroup = new THREE.Group();
+                this.edgeGroup = new THREE.Group();
+                this.targetPositions = [];
+                
+                this.nodeMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0x888888,
+                    emissive: 0x222222,
+                    roughness: 0.5,
+                    metalness: 0.3
+                });
+                
+                this.edgeMaterial = new THREE.LineBasicMaterial({ 
+                    color: 0x555555,
+                    transparent: true,
+                    opacity: 0.6
+                });
+                
+                this.init();
+            }
+            
+            init() {
+                // Generate deterministic but session-unique positions
+                const seed = this.hashCode(CONFIG.SESSION_ID);
+                const rng = this.seededRandom(seed);
+                
+                // Create nodes in a structured lattice with controlled randomness
+                for (let i = 0; i < this.nodeCount; i++) {
+                    const phi = Math.acos(1 - 2 * (i + 0.5) / this.nodeCount);
+                    const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+                    
+                    const radius = 3.5 + rng() * 1.5;
+                    const x = radius * Math.sin(phi) * Math.cos(theta) + (rng() - 0.5) * 0.5;
+                    const y = radius * Math.sin(phi) * Math.sin(theta) + (rng() - 0.5) * 0.5;
+                    const z = radius * Math.cos(phi) + (rng() - 0.5) * 0.5;
+                    
+                    const geometry = new THREE.SphereGeometry(0.04 + rng() * 0.025, 12, 12);
+                    const node = new THREE.Mesh(geometry, this.nodeMaterial.clone());
+                    node.position.set(x, y, z);
+                    
+                    this.nodes.push(node);
+                    this.targetPositions.push(new THREE.Vector3(x, y, z));
+                    this.nodeGroup.add(node);
+                }
+                
+                // Generate edges based on proximity
+                this.generateEdges();
+                
+                scene.add(this.nodeGroup);
+                scene.add(this.edgeGroup);
+            }
+            
+            generateEdges() {
+                // Clear existing edges
+                while (this.edgeGroup.children.length > 0) {
+                    this.edgeGroup.remove(this.edgeGroup.children[0]);
+                }
+                this.edges = [];
+                
+                for (let i = 0; i < this.nodes.length; i++) {
+                    for (let j = i + 1; j < this.nodes.length; j++) {
+                        const dist = this.nodes[i].position.distanceTo(this.nodes[j].position);
+                        if (dist < CONFIG.EDGE_DISTANCE_THRESHOLD) {
+                            const geometry = new THREE.BufferGeometry().setFromPoints([
+                                this.nodes[i].position.clone(),
+                                this.nodes[j].position.clone()
+                            ]);
+                            const edge = new THREE.Line(geometry, this.edgeMaterial.clone());
+                            edge.userData = { i, j, baseOpacity: Math.max(0.3, 0.7 - dist * 0.12) };
+                            this.edges.push(edge);
+                            this.edgeGroup.add(edge);
+                        }
+                    }
+                }
+            }
+            
+            update(stability, mouseInfluence) {
+                const instability = 1 - stability;
+                
+                this.nodes.forEach((node, i) => {
+                    const target = this.targetPositions[i];
+                    
+                    // Apply subtle displacement based on instability
+                    const displacement = new THREE.Vector3(
+                        (Math.random() - 0.5) * instability * 0.02,
+                        (Math.random() - 0.5) * instability * 0.02,
+                        (Math.random() - 0.5) * instability * 0.02
+                    );
+                    
+                    // Lerp toward target with damping
+                    node.position.lerp(target, 0.02);
+                    node.position.add(displacement);
+                    
+                    // Subtle mouse influence
+                    node.position.x += mouseInfluence.x * 0.0003 * (1 - stability);
+                    node.position.y += mouseInfluence.y * 0.0003 * (1 - stability);
+                    
+                    // Update node opacity based on depth
+                    const depth = (node.position.z + 5) / 10;
+                    node.material.opacity = 0.3 + depth * 0.5;
+                });
+                
+                // Update edges
+                this.edges.forEach(edge => {
+                    const { i, j, baseOpacity } = edge.userData;
+                    const positions = edge.geometry.attributes.position.array;
+                    
+                    positions[0] = this.nodes[i].position.x;
+                    positions[1] = this.nodes[i].position.y;
+                    positions[2] = this.nodes[i].position.z;
+                    positions[3] = this.nodes[j].position.x;
+                    positions[4] = this.nodes[j].position.y;
+                    positions[5] = this.nodes[j].position.z;
+                    
+                    edge.geometry.attributes.position.needsUpdate = true;
+                    edge.material.opacity = baseOpacity * stability;
+                });
+            }
+            
+            reconfigureForSecurity() {
+                // Transition to a more interconnected, defensive topology
+                const seed = this.hashCode(CONFIG.SESSION_ID + 'security');
+                const rng = this.seededRandom(seed);
+                
+                this.targetPositions.forEach((pos, i) => {
+                    // Create concentric defensive rings
+                    const ring = Math.floor(i / 30);
+                    const indexInRing = i % 30;
+                    const angle = (indexInRing / 30) * Math.PI * 2;
+                    const radius = 1.5 + ring * 1.2;
+                    const height = (rng() - 0.5) * 2;
+                    
+                    pos.set(
+                        Math.cos(angle) * radius,
+                        height,
+                        Math.sin(angle) * radius
+                    );
+                });
+                
+                // Regenerate edges after transition settles
+                setTimeout(() => this.generateEdges(), 2000);
+            }
+            
+            hashCode(str) {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    const char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                return Math.abs(hash);
+            }
+            
+            seededRandom(seed) {
+                return function() {
+                    seed = (seed * 9301 + 49297) % 233280;
+                    return seed / 233280;
+                };
+            }
+        }
+
+        let lattice = new LatticeSystem(CONFIG.NODE_COUNT);
+
+        // ═══════════════════════════════════════════════════════════════
+        // INPUT HANDLING
+        // ═══════════════════════════════════════════════════════════════
+        
+        let lastMouseX = 0, lastMouseY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 2 - 1;
+            const y = -(e.clientY / window.innerHeight) * 2 + 1;
+            
+            state.mouse.vx = x - lastMouseX;
+            state.mouse.vy = y - lastMouseY;
+            state.mouse.x = x;
+            state.mouse.y = y;
+            
+            lastMouseX = x;
+            lastMouseY = y;
+            
+            // Update coordinates display
+            document.getElementById('coordinates').textContent = 
+                `${x.toFixed(3)} / ${y.toFixed(3)}`;
+        });
+
+        // Scroll/wheel detection - reveal product after interaction
+        let totalWheelDelta = 0;
+        
+        window.addEventListener('wheel', (e) => {
+            totalWheelDelta += Math.abs(e.deltaY);
+            state.scroll.velocity = Math.abs(e.deltaY);
+            
+            // Reveal product after enough scroll interaction
+            if (totalWheelDelta > 300 && !state.productRevealed) {
+                state.productRevealed = true;
+                document.getElementById('product-reveal').classList.add('visible');
+            }
+            
+            // Hide scroll hint after any scroll
+            document.getElementById('scroll-hint').classList.add('hidden');
+        });
+
+        // Also trigger on time - reveal after 8 seconds on page
+        setTimeout(() => {
+            if (!state.productRevealed) {
+                state.productRevealed = true;
+                document.getElementById('product-reveal').classList.add('visible');
+            }
+        }, 8000);
+
+        // Keyboard: Open system notes with 'S' key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 's' || e.key === 'S') {
+                state.systemNotesOpen = !state.systemNotesOpen;
+                document.getElementById('system-notes').classList.toggle('open', state.systemNotesOpen);
+            }
+        });
+
+        // Product reveal click - trigger security mode
+        document.getElementById('product-reveal').addEventListener('click', () => {
+            if (!state.isSecurityMode) {
+                state.isSecurityMode = true;
+                document.getElementById('product-reveal').classList.add('active');
+                document.getElementById('metric-mode').textContent = 'Security / RecoveryLock';
+                lattice.reconfigureForSecurity();
+            }
+        });
+
+        // Long hover on wordmark reveals system status
+        const wordmark = document.querySelector('.wordmark');
+        let hoverCheckInterval = null;
+        
+        wordmark.addEventListener('mouseenter', () => {
+            state.hoverStartTime = Date.now();
+            // Check every 100ms if we've hit the threshold
+            hoverCheckInterval = setInterval(() => {
+                if (state.hoverStartTime && Date.now() - state.hoverStartTime > 2000) {
+                    document.getElementById('system-status').classList.add('visible');
+                    clearInterval(hoverCheckInterval);
+                }
+            }, 100);
+        });
+        
+        wordmark.addEventListener('mouseleave', () => {
+            state.hoverStartTime = null;
+            if (hoverCheckInterval) {
+                clearInterval(hoverCheckInterval);
+                hoverCheckInterval = null;
+            }
+        });
+
+        // Click wordmark to toggle camera perspective
+        wordmark.addEventListener('click', () => {
+            state.perspectiveMode = (state.perspectiveMode + 1) % PERSPECTIVES.length;
+            const p = PERSPECTIVES[state.perspectiveMode];
+            state.cameraTarget.z = p.z;
+            state.cameraTarget.rotX = p.rotX;
+            state.cameraTarget.rotY = p.rotY;
+            
+            // Smoothly transition FOV
+            gsapLerpFOV(camera.fov, p.fov);
+            
+            // Update system status to show current view
+            document.getElementById('render-time').textContent = p.name;
+        });
+
+        // Simple FOV lerp function
+        function gsapLerpFOV(from, to) {
+            const duration = 1500;
+            const start = performance.now();
+            const animate = () => {
+                const elapsed = performance.now() - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+                camera.fov = from + (to - from) * eased;
+                camera.updateProjectionMatrix();
+                if (progress < 1) requestAnimationFrame(animate);
+            };
+            animate();
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // STABILITY CALCULATION
+        // ═══════════════════════════════════════════════════════════════
+        
+        function calculateStability() {
+            const mouseSpeed = Math.sqrt(state.mouse.vx ** 2 + state.mouse.vy ** 2);
+            const scrollInfluence = Math.min(state.scroll.velocity / 50, 1);
+            const timeInfluence = Math.min(state.timeOnPage / 30000, 1); // Stabilizes over 30s
+            
+            // Erratic input destabilizes, stillness and time stabilize
+            const targetStability = Math.max(0.3, 
+                1 - mouseSpeed * 5 - scrollInfluence * 0.5 + timeInfluence * 0.3
+            );
+            
+            state.stability += (targetStability - state.stability) * 0.02;
+            state.stability = Math.max(0.3, Math.min(1, state.stability));
+            
+            return state.stability;
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // METRICS UPDATE
+        // ═══════════════════════════════════════════════════════════════
+        
+        function updateMetrics(deltaTime) {
+            state.frameCount++;
+            
+            if (state.frameCount % 30 === 0) {
+                state.fps = Math.round(1000 / deltaTime);
+                
+                document.getElementById('metric-frametime').textContent = `${deltaTime.toFixed(2)}ms`;
+                document.getElementById('metric-fps').textContent = `${state.fps} fps`;
+                document.getElementById('metric-drawcalls').textContent = renderer.info.render.calls;
+                document.getElementById('metric-triangles').textContent = renderer.info.render.triangles.toLocaleString();
+                document.getElementById('metric-nodes').textContent = lattice.nodes.length;
+                document.getElementById('metric-edges').textContent = lattice.edges.length;
+                document.getElementById('metric-stability').textContent = `${(state.stability * 100).toFixed(1)}%`;
+                document.getElementById('metric-build').textContent = CONFIG.BUILD_HASH;
+                document.getElementById('metric-session').textContent = CONFIG.SESSION_ID;
+                
+                document.getElementById('render-time').textContent = `${deltaTime.toFixed(1)}ms / ${state.fps}fps`;
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // RENDER LOOP
+        // ═══════════════════════════════════════════════════════════════
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const now = performance.now();
+            const deltaTime = now - state.lastFrameTime;
+            state.lastFrameTime = now;
+            state.timeOnPage += deltaTime;
+            
+            // Calculate system stability
+            const stability = calculateStability();
+            
+            // Update lattice
+            lattice.update(stability, { x: state.mouse.vx, y: state.mouse.vy });
+            
+            // Slow, controlled rotation
+            const rotationSpeed = CONFIG.BASE_ROTATION_SPEED * (0.5 + stability * 0.5);
+            lattice.nodeGroup.rotation.y += rotationSpeed * deltaTime;
+            lattice.edgeGroup.rotation.y += rotationSpeed * deltaTime;
+            
+            // Subtle camera breathing + perspective lerp
+            const breathe = Math.sin(now * 0.0001) * 0.08;
+            camera.position.z += (state.cameraTarget.z + breathe - camera.position.z) * 0.03;
+            
+            // Lerp camera rotation for perspective changes
+            lattice.nodeGroup.rotation.x += (state.cameraTarget.rotX - lattice.nodeGroup.rotation.x) * 0.02;
+            lattice.edgeGroup.rotation.x += (state.cameraTarget.rotX - lattice.edgeGroup.rotation.x) * 0.02;
+            
+            // Dampen mouse velocity
+            state.mouse.vx *= CONFIG.DAMPING;
+            state.mouse.vy *= CONFIG.DAMPING;
+            state.scroll.velocity *= CONFIG.DAMPING;
+            
+            // Update metrics
+            updateMetrics(deltaTime);
+            
+            renderer.render(scene, camera);
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // RESIZE HANDLER
+        // ═══════════════════════════════════════════════════════════════
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZE
+        // ═══════════════════════════════════════════════════════════════
+        
+        animate();
+    </script>
 </body>
 </html>
