@@ -34,7 +34,7 @@
             font-weight: 400;
             letter-spacing: -0.01em;
             overflow-x: hidden;
-            cursor: default;
+            cursor: none;
         }
 
         /* Canvas Layer */
@@ -45,6 +45,28 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--fg);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease;
+        }
+
+        .cursor-dot.hovering {
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
         }
 
         /* Content Layer */
@@ -61,6 +83,7 @@
 
         .content-layer * {
             pointer-events: auto;
+            cursor: none;
         }
 
         /* Header */
@@ -77,7 +100,7 @@
             text-transform: uppercase;
             color: var(--fg-dim);
             line-height: 1.6;
-            cursor: pointer;
+            cursor: none;
             padding: 0.5rem;
             margin: -0.5rem;
             transition: color 0.3s ease;
@@ -90,25 +113,6 @@
         
         .wordmark:active {
             color: var(--accent);
-        }
-
-        .system-status {
-            font-size: 0.625rem;
-            font-weight: 400;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--fg-muted);
-            text-align: right;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        .system-status.visible {
-            opacity: 1;
-        }
-
-        .status-line {
-            margin-bottom: 0.25rem;
         }
 
         /* Hero Copy */
@@ -140,40 +144,65 @@
             font-weight: 300;
         }
 
-        /* Product Reveal */
-        .product-reveal {
-            position: fixed;
-            bottom: 6rem;
-            left: 3rem;
-            font-size: 0.8125rem;
-            font-weight: 400;
-            letter-spacing: 0.02em;
-            color: var(--fg-dim);
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.8s ease, transform 0.8s ease, color 0.4s ease;
-            cursor: pointer;
-            z-index: 20;
-        }
-
-        .product-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .product-reveal:hover {
-            color: var(--fg);
-        }
-
-        .product-reveal.active {
-            color: var(--accent);
-        }
-
         /* Footer */
         footer {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
+        }
+
+        /* Product Navigation */
+        .product-nav {
+            position: fixed;
+            top: 3rem;
+            right: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+            z-index: 50;
+        }
+
+        .product-link {
+            font-size: 0.6875rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--fg-muted);
+            text-decoration: none;
+            cursor: none;
+            position: relative;
+            padding: 0.25rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .product-link:hover {
+            color: var(--fg);
+        }
+
+        .product-link .char {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        opacity 0.3s ease;
+        }
+
+        .product-link:hover .char {
+            animation: fragmentScatter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes fragmentScatter {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+            30% {
+                transform: translate(var(--scatter-x), var(--scatter-y)) rotate(var(--scatter-r));
+                opacity: 0.4;
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
         }
 
         .coordinates {
@@ -255,34 +284,30 @@
             font-size: 0.6875rem;
         }
 
-        /* Scroll indicator */
-        .scroll-hint {
-            position: fixed;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--fg-muted), transparent);
-            opacity: 0.5;
-            transition: opacity 0.6s ease;
-        }
-
-        .scroll-hint.hidden {
-            opacity: 0;
+        /* Mobile - show default cursor */
+        @media (hover: none) and (pointer: coarse) {
+            body { cursor: default; }
+            .content-layer * { cursor: default; }
+            .cursor, .cursor-ring { display: none; }
         }
     </style>
 </head>
 <body>
     <canvas id="system-canvas"></canvas>
 
+    <!-- Custom Cursor -->
+    <div class="cursor cursor-dot" id="cursor-dot"></div>
+
     <div class="content-layer">
         <header>
             <div class="wordmark">Number One Son<br>Software Development</div>
-            <div class="system-status" id="system-status">
-                <div class="status-line">System Active</div>
-                <div class="status-line" id="render-time">—</div>
-            </div>
+            <nav class="product-nav" id="product-nav">
+                <a href="https://recoverylock.app" target="_blank" class="product-link" data-text="RecoveryLock">RecoveryLock</a>
+                <a href="https://brainforge.tech" target="_blank" class="product-link" data-text="BrainForge">BrainForge</a>
+                <a href="https://bookfactory.cafe" target="_blank" class="product-link" data-text="BookFactory">BookFactory</a>
+                <a href="https://papervault.one" target="_blank" class="product-link" data-text="PaperVault">PaperVault</a>
+                <a href="https://mapandmingle.com" target="_blank" class="product-link" data-text="Map &amp; Mingle">Map & Mingle</a>
+            </nav>
         </header>
 
         <div class="hero">
@@ -292,15 +317,11 @@
             </h1>
         </div>
 
-        <div class="product-reveal" id="product-reveal">Currently shipping: RecoveryLock</div>
-
         <footer>
             <div class="coordinates" id="coordinates">0.000 / 0.000</div>
             <a href="mailto:roger@grubb.net" class="contact">Contact</a>
         </footer>
     </div>
-
-    <div class="scroll-hint" id="scroll-hint"></div>
 
     <div class="system-notes" id="system-notes">
         <h2>System Notes</h2>
@@ -329,14 +350,6 @@
             <div class="metric-value" id="metric-edges">—</div>
         </div>
         <div class="metric-group">
-            <div class="metric-label">Interaction Stability</div>
-            <div class="metric-value" id="metric-stability">—</div>
-        </div>
-        <div class="metric-group">
-            <div class="metric-label">System Mode</div>
-            <div class="metric-value" id="metric-mode">Standard</div>
-        </div>
-        <div class="metric-group">
             <div class="metric-label">Build</div>
             <div class="metric-value mono" id="metric-build">—</div>
         </div>
@@ -349,7 +362,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         // ═══════════════════════════════════════════════════════════════
-        // SYSTEM CONFIGURATION
+        // CONFIGURATION
         // ═══════════════════════════════════════════════════════════════
         
         const CONFIG = {
@@ -357,37 +370,69 @@
             EDGE_DISTANCE_THRESHOLD: 2.8,
             BASE_ROTATION_SPEED: 0.00008,
             DAMPING: 0.92,
-            STABILITY_THRESHOLD: 0.015,
-            SECURITY_MODE_NODE_COUNT: 180,
-            BUILD_HASH: 'a7f3e2d',
+            BUILD_HASH: 'c3f2a9b',
             SESSION_ID: crypto.randomUUID().slice(0, 8)
         };
+
+        // Product data
+        const PRODUCTS = [
+            { name: 'RecoveryLock', url: 'https://recoverylock.app' },
+            { name: 'BrainForge', url: 'https://brainforge.tech' },
+            { name: 'BookFactory', url: 'https://bookfactory.cafe' },
+            { name: 'PaperVault', url: 'https://papervault.one' },
+            { name: 'Map & Mingle', url: 'https://mapandmingle.com' }
+        ];
 
         // ═══════════════════════════════════════════════════════════════
         // STATE
         // ═══════════════════════════════════════════════════════════════
         
         const state = {
-            mouse: { x: 0, y: 0, vx: 0, vy: 0 },
-            scroll: { y: 0, velocity: 0 },
-            stability: 1,
-            timeOnPage: 0,
-            isSecurityMode: false,
-            systemNotesOpen: false,
-            productRevealed: false,
-            hoverStartTime: null,
+            mouse: { x: 0, y: 0, screenX: 0, screenY: 0 },
             lastFrameTime: performance.now(),
             frameCount: 0,
-            fps: 60,
-            perspectiveMode: 0, // 0 = spread/flat, 1 = clustered/depth
-            cameraTarget: { x: 0, y: 0, z: 8, rotX: 0, rotY: 0 }
+            systemNotesOpen: false
         };
 
-        // Camera perspective configurations
-        const PERSPECTIVES = [
-            { z: 12, rotX: 0.8, rotY: 0, fov: 60, name: 'Topographic' },      // Spread, looking down
-            { z: 8, rotX: 0.1, rotY: 0, fov: 45, name: 'Isometric' }           // Clustered, eye-level
-        ];
+        // ═══════════════════════════════════════════════════════════════
+        // PRODUCT LINK FRAGMENT EFFECT
+        // ═══════════════════════════════════════════════════════════════
+        
+        function initProductLinks() {
+            const links = document.querySelectorAll('.product-link');
+            
+            links.forEach(link => {
+                const text = link.textContent;
+                link.innerHTML = '';
+                
+                // Split into individual characters
+                text.split('').forEach((char, i) => {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    
+                    // Random scatter values for each character
+                    const scatterX = (Math.random() - 0.5) * 30;
+                    const scatterY = (Math.random() - 0.5) * 20;
+                    const scatterR = (Math.random() - 0.5) * 30;
+                    
+                    span.style.setProperty('--scatter-x', `${scatterX}px`);
+                    span.style.setProperty('--scatter-y', `${scatterY}px`);
+                    span.style.setProperty('--scatter-r', `${scatterR}deg`);
+                    span.style.animationDelay = `${i * 0.02}s`;
+                    
+                    link.appendChild(span);
+                });
+            });
+        }
+        
+        initProductLinks();
+
+        // ═══════════════════════════════════════════════════════════════
+        // CURSOR ELEMENTS
+        // ═══════════════════════════════════════════════════════════════
+        
+        const cursorDot = document.getElementById('cursor-dot');
 
         // ═══════════════════════════════════════════════════════════════
         // THREE.JS SETUP
@@ -410,7 +455,7 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         // ═══════════════════════════════════════════════════════════════
-        // LIGHTING - Physically Plausible
+        // LIGHTING
         // ═══════════════════════════════════════════════════════════════
         
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
@@ -458,11 +503,9 @@
             }
             
             init() {
-                // Generate deterministic but session-unique positions
                 const seed = this.hashCode(CONFIG.SESSION_ID);
                 const rng = this.seededRandom(seed);
                 
-                // Create nodes in a structured lattice with controlled randomness
                 for (let i = 0; i < this.nodeCount; i++) {
                     const phi = Math.acos(1 - 2 * (i + 0.5) / this.nodeCount);
                     const theta = Math.PI * (1 + Math.sqrt(5)) * i;
@@ -481,7 +524,6 @@
                     this.nodeGroup.add(node);
                 }
                 
-                // Generate edges based on proximity
                 this.generateEdges();
                 
                 scene.add(this.nodeGroup);
@@ -489,7 +531,6 @@
             }
             
             generateEdges() {
-                // Clear existing edges
                 while (this.edgeGroup.children.length > 0) {
                     this.edgeGroup.remove(this.edgeGroup.children[0]);
                 }
@@ -512,35 +553,18 @@
                 }
             }
             
-            update(stability, mouseInfluence) {
-                const instability = 1 - stability;
-                
+            update(mouseInfluence) {
                 this.nodes.forEach((node, i) => {
                     const target = this.targetPositions[i];
-                    
-                    // Apply subtle displacement based on instability
-                    const displacement = new THREE.Vector3(
-                        (Math.random() - 0.5) * instability * 0.02,
-                        (Math.random() - 0.5) * instability * 0.02,
-                        (Math.random() - 0.5) * instability * 0.02
-                    );
-                    
-                    // Lerp toward target with damping
                     node.position.lerp(target, 0.02);
-                    node.position.add(displacement);
                     
                     // Subtle mouse influence
-                    node.position.x += mouseInfluence.x * 0.0003 * (1 - stability);
-                    node.position.y += mouseInfluence.y * 0.0003 * (1 - stability);
-                    
-                    // Update node opacity based on depth
-                    const depth = (node.position.z + 5) / 10;
-                    node.material.opacity = 0.3 + depth * 0.5;
+                    node.position.x += mouseInfluence.x * 0.0002;
+                    node.position.y += mouseInfluence.y * 0.0002;
                 });
                 
-                // Update edges
                 this.edges.forEach(edge => {
-                    const { i, j, baseOpacity } = edge.userData;
+                    const { i, j } = edge.userData;
                     const positions = edge.geometry.attributes.position.array;
                     
                     positions[0] = this.nodes[i].position.x;
@@ -551,32 +575,7 @@
                     positions[5] = this.nodes[j].position.z;
                     
                     edge.geometry.attributes.position.needsUpdate = true;
-                    edge.material.opacity = baseOpacity * stability;
                 });
-            }
-            
-            reconfigureForSecurity() {
-                // Transition to a more interconnected, defensive topology
-                const seed = this.hashCode(CONFIG.SESSION_ID + 'security');
-                const rng = this.seededRandom(seed);
-                
-                this.targetPositions.forEach((pos, i) => {
-                    // Create concentric defensive rings
-                    const ring = Math.floor(i / 30);
-                    const indexInRing = i % 30;
-                    const angle = (indexInRing / 30) * Math.PI * 2;
-                    const radius = 1.5 + ring * 1.2;
-                    const height = (rng() - 0.5) * 2;
-                    
-                    pos.set(
-                        Math.cos(angle) * radius,
-                        height,
-                        Math.sin(angle) * radius
-                    );
-                });
-                
-                // Regenerate edges after transition settles
-                setTimeout(() => this.generateEdges(), 2000);
             }
             
             hashCode(str) {
@@ -597,55 +596,36 @@
             }
         }
 
-        let lattice = new LatticeSystem(CONFIG.NODE_COUNT);
+        const lattice = new LatticeSystem(CONFIG.NODE_COUNT);
 
         // ═══════════════════════════════════════════════════════════════
         // INPUT HANDLING
         // ═══════════════════════════════════════════════════════════════
         
-        let lastMouseX = 0, lastMouseY = 0;
-        
         document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth) * 2 - 1;
-            const y = -(e.clientY / window.innerHeight) * 2 + 1;
+            state.mouse.screenX = e.clientX;
+            state.mouse.screenY = e.clientY;
+            state.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+            state.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
             
-            state.mouse.vx = x - lastMouseX;
-            state.mouse.vy = y - lastMouseY;
-            state.mouse.x = x;
-            state.mouse.y = y;
+            // Move cursor dot
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
             
-            lastMouseX = x;
-            lastMouseY = y;
-            
-            // Update coordinates display
             document.getElementById('coordinates').textContent = 
-                `${x.toFixed(3)} / ${y.toFixed(3)}`;
+                `${state.mouse.x.toFixed(3)} / ${state.mouse.y.toFixed(3)}`;
         });
 
-        // Scroll/wheel detection - reveal product after interaction
-        let totalWheelDelta = 0;
-        
-        window.addEventListener('wheel', (e) => {
-            totalWheelDelta += Math.abs(e.deltaY);
-            state.scroll.velocity = Math.abs(e.deltaY);
-            
-            // Reveal product after enough scroll interaction
-            if (totalWheelDelta > 300 && !state.productRevealed) {
-                state.productRevealed = true;
-                document.getElementById('product-reveal').classList.add('visible');
-            }
-            
-            // Hide scroll hint after any scroll
-            document.getElementById('scroll-hint').classList.add('hidden');
+        // Cursor hover state for links
+        const productLinks = document.querySelectorAll('.product-link');
+        productLinks.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursorDot.classList.add('hovering');
+            });
+            link.addEventListener('mouseleave', () => {
+                cursorDot.classList.remove('hovering');
+            });
         });
-
-        // Also trigger on time - reveal after 8 seconds on page
-        setTimeout(() => {
-            if (!state.productRevealed) {
-                state.productRevealed = true;
-                document.getElementById('product-reveal').classList.add('visible');
-            }
-        }, 8000);
 
         // Keyboard: Open system notes with 'S' key
         document.addEventListener('keydown', (e) => {
@@ -655,115 +635,8 @@
             }
         });
 
-        // Product reveal click - trigger security mode
-        document.getElementById('product-reveal').addEventListener('click', () => {
-            if (!state.isSecurityMode) {
-                state.isSecurityMode = true;
-                document.getElementById('product-reveal').classList.add('active');
-                document.getElementById('metric-mode').textContent = 'Security / RecoveryLock';
-                lattice.reconfigureForSecurity();
-            }
-        });
-
-        // Long hover on wordmark reveals system status
-        const wordmark = document.querySelector('.wordmark');
-        let hoverCheckInterval = null;
-        
-        wordmark.addEventListener('mouseenter', () => {
-            state.hoverStartTime = Date.now();
-            // Check every 100ms if we've hit the threshold
-            hoverCheckInterval = setInterval(() => {
-                if (state.hoverStartTime && Date.now() - state.hoverStartTime > 2000) {
-                    document.getElementById('system-status').classList.add('visible');
-                    clearInterval(hoverCheckInterval);
-                }
-            }, 100);
-        });
-        
-        wordmark.addEventListener('mouseleave', () => {
-            state.hoverStartTime = null;
-            if (hoverCheckInterval) {
-                clearInterval(hoverCheckInterval);
-                hoverCheckInterval = null;
-            }
-        });
-
-        // Click wordmark to toggle camera perspective
-        wordmark.addEventListener('click', () => {
-            state.perspectiveMode = (state.perspectiveMode + 1) % PERSPECTIVES.length;
-            const p = PERSPECTIVES[state.perspectiveMode];
-            state.cameraTarget.z = p.z;
-            state.cameraTarget.rotX = p.rotX;
-            state.cameraTarget.rotY = p.rotY;
-            
-            // Smoothly transition FOV
-            gsapLerpFOV(camera.fov, p.fov);
-            
-            // Update system status to show current view
-            document.getElementById('render-time').textContent = p.name;
-        });
-
-        // Simple FOV lerp function
-        function gsapLerpFOV(from, to) {
-            const duration = 1500;
-            const start = performance.now();
-            const animate = () => {
-                const elapsed = performance.now() - start;
-                const progress = Math.min(elapsed / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-                camera.fov = from + (to - from) * eased;
-                camera.updateProjectionMatrix();
-                if (progress < 1) requestAnimationFrame(animate);
-            };
-            animate();
-        }
-
         // ═══════════════════════════════════════════════════════════════
-        // STABILITY CALCULATION
-        // ═══════════════════════════════════════════════════════════════
-        
-        function calculateStability() {
-            const mouseSpeed = Math.sqrt(state.mouse.vx ** 2 + state.mouse.vy ** 2);
-            const scrollInfluence = Math.min(state.scroll.velocity / 50, 1);
-            const timeInfluence = Math.min(state.timeOnPage / 30000, 1); // Stabilizes over 30s
-            
-            // Erratic input destabilizes, stillness and time stabilize
-            const targetStability = Math.max(0.3, 
-                1 - mouseSpeed * 5 - scrollInfluence * 0.5 + timeInfluence * 0.3
-            );
-            
-            state.stability += (targetStability - state.stability) * 0.02;
-            state.stability = Math.max(0.3, Math.min(1, state.stability));
-            
-            return state.stability;
-        }
-
-        // ═══════════════════════════════════════════════════════════════
-        // METRICS UPDATE
-        // ═══════════════════════════════════════════════════════════════
-        
-        function updateMetrics(deltaTime) {
-            state.frameCount++;
-            
-            if (state.frameCount % 30 === 0) {
-                state.fps = Math.round(1000 / deltaTime);
-                
-                document.getElementById('metric-frametime').textContent = `${deltaTime.toFixed(2)}ms`;
-                document.getElementById('metric-fps').textContent = `${state.fps} fps`;
-                document.getElementById('metric-drawcalls').textContent = renderer.info.render.calls;
-                document.getElementById('metric-triangles').textContent = renderer.info.render.triangles.toLocaleString();
-                document.getElementById('metric-nodes').textContent = lattice.nodes.length;
-                document.getElementById('metric-edges').textContent = lattice.edges.length;
-                document.getElementById('metric-stability').textContent = `${(state.stability * 100).toFixed(1)}%`;
-                document.getElementById('metric-build').textContent = CONFIG.BUILD_HASH;
-                document.getElementById('metric-session').textContent = CONFIG.SESSION_ID;
-                
-                document.getElementById('render-time').textContent = `${deltaTime.toFixed(1)}ms / ${state.fps}fps`;
-            }
-        }
-
-        // ═══════════════════════════════════════════════════════════════
-        // RENDER LOOP
+        // ANIMATION LOOP
         // ═══════════════════════════════════════════════════════════════
         
         function animate() {
@@ -772,40 +645,36 @@
             const now = performance.now();
             const deltaTime = now - state.lastFrameTime;
             state.lastFrameTime = now;
-            state.timeOnPage += deltaTime;
-            
-            // Calculate system stability
-            const stability = calculateStability();
-            
+            state.frameCount++;
+
+            // Slow rotation
+            const rotationSpeed = CONFIG.BASE_ROTATION_SPEED * deltaTime;
+            lattice.nodeGroup.rotation.y += rotationSpeed;
+            lattice.edgeGroup.rotation.y += rotationSpeed;
+
             // Update lattice
-            lattice.update(stability, { x: state.mouse.vx, y: state.mouse.vy });
-            
-            // Slow, controlled rotation
-            const rotationSpeed = CONFIG.BASE_ROTATION_SPEED * (0.5 + stability * 0.5);
-            lattice.nodeGroup.rotation.y += rotationSpeed * deltaTime;
-            lattice.edgeGroup.rotation.y += rotationSpeed * deltaTime;
-            
-            // Subtle camera breathing + perspective lerp
-            const breathe = Math.sin(now * 0.0001) * 0.08;
-            camera.position.z += (state.cameraTarget.z + breathe - camera.position.z) * 0.03;
-            
-            // Lerp camera rotation for perspective changes
-            lattice.nodeGroup.rotation.x += (state.cameraTarget.rotX - lattice.nodeGroup.rotation.x) * 0.02;
-            lattice.edgeGroup.rotation.x += (state.cameraTarget.rotX - lattice.edgeGroup.rotation.x) * 0.02;
-            
-            // Dampen mouse velocity
-            state.mouse.vx *= CONFIG.DAMPING;
-            state.mouse.vy *= CONFIG.DAMPING;
-            state.scroll.velocity *= CONFIG.DAMPING;
-            
+            lattice.update({ x: state.mouse.x * 0.5, y: state.mouse.y * 0.5 });
+
             // Update metrics
-            updateMetrics(deltaTime);
-            
+            if (state.frameCount % 30 === 0) {
+                const fps = Math.round(1000 / deltaTime);
+                document.getElementById('metric-frametime').textContent = `${deltaTime.toFixed(2)}ms`;
+                document.getElementById('metric-fps').textContent = `${fps} fps`;
+                document.getElementById('metric-drawcalls').textContent = renderer.info.render.calls;
+                document.getElementById('metric-triangles').textContent = renderer.info.render.triangles.toLocaleString();
+                document.getElementById('metric-nodes').textContent = lattice.nodes.length;
+                document.getElementById('metric-edges').textContent = lattice.edges.length;
+                document.getElementById('metric-build').textContent = CONFIG.BUILD_HASH;
+                document.getElementById('metric-session').textContent = CONFIG.SESSION_ID;
+            }
+
             renderer.render(scene, camera);
         }
 
+        animate();
+
         // ═══════════════════════════════════════════════════════════════
-        // RESIZE HANDLER
+        // RESIZE
         // ═══════════════════════════════════════════════════════════════
         
         window.addEventListener('resize', () => {
@@ -813,12 +682,6 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
-
-        // ═══════════════════════════════════════════════════════════════
-        // INITIALIZE
-        // ═══════════════════════════════════════════════════════════════
-        
-        animate();
     </script>
 </body>
 </html>
