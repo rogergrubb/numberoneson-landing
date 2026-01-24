@@ -391,8 +391,16 @@
             mouse: { x: 0, y: 0, screenX: 0, screenY: 0 },
             lastFrameTime: performance.now(),
             frameCount: 0,
-            systemNotesOpen: false
+            systemNotesOpen: false,
+            perspectiveMode: 0,
+            cameraTarget: { z: 8, rotX: 0 }
         };
+
+        // Camera perspective configurations
+        const PERSPECTIVES = [
+            { z: 8, rotX: 0.1, fov: 45, name: 'Isometric' },
+            { z: 12, rotX: 0.8, fov: 60, name: 'Topographic' }
+        ];
 
         // ═══════════════════════════════════════════════════════════════
         // PRODUCT LINK FRAGMENT EFFECT
@@ -635,6 +643,31 @@
             }
         });
 
+        // Wordmark click - toggle camera perspective
+        const wordmark = document.querySelector('.wordmark');
+        wordmark.addEventListener('click', () => {
+            state.perspectiveMode = (state.perspectiveMode + 1) % PERSPECTIVES.length;
+            const p = PERSPECTIVES[state.perspectiveMode];
+            state.cameraTarget.z = p.z;
+            state.cameraTarget.rotX = p.rotX;
+            
+            // Smooth FOV transition
+            const startFov = camera.fov;
+            const endFov = p.fov;
+            const duration = 1500;
+            const startTime = performance.now();
+            
+            function animateFov() {
+                const elapsed = performance.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                camera.fov = startFov + (endFov - startFov) * eased;
+                camera.updateProjectionMatrix();
+                if (progress < 1) requestAnimationFrame(animateFov);
+            }
+            animateFov();
+        });
+
         // ═══════════════════════════════════════════════════════════════
         // ANIMATION LOOP
         // ═══════════════════════════════════════════════════════════════
@@ -654,6 +687,11 @@
 
             // Update lattice
             lattice.update({ x: state.mouse.x * 0.5, y: state.mouse.y * 0.5 });
+
+            // Smooth camera transitions
+            camera.position.z += (state.cameraTarget.z - camera.position.z) * 0.03;
+            lattice.nodeGroup.rotation.x += (state.cameraTarget.rotX - lattice.nodeGroup.rotation.x) * 0.02;
+            lattice.edgeGroup.rotation.x += (state.cameraTarget.rotX - lattice.edgeGroup.rotation.x) * 0.02;
 
             // Update metrics
             if (state.frameCount % 30 === 0) {
