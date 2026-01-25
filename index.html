@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Number One Son Software Development</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
         
         :root {
             --bg: #0a0a0b;
@@ -13,6 +13,7 @@
             --fg-dim: #6a6a6a;
             --fg-muted: #3a3a3a;
             --accent: #ffffff;
+            --terminal-green: #4ade80;
         }
 
         * {
@@ -213,7 +214,7 @@
             font-variant-numeric: tabular-nums;
         }
 
-        .contact {
+        .contact-trigger {
             font-size: 0.625rem;
             font-weight: 400;
             letter-spacing: 0.08em;
@@ -221,10 +222,251 @@
             color: var(--fg-muted);
             text-decoration: none;
             transition: color 0.3s ease;
+            background: none;
+            border: none;
+            cursor: none;
+            font-family: inherit;
         }
 
-        .contact:hover {
+        .contact-trigger:hover {
             color: var(--fg-dim);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           CONTACT TERMINAL OVERLAY
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .contact-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 11, 0.92);
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .contact-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .contact-terminal {
+            width: 100%;
+            max-width: 480px;
+            padding: 2rem;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.5s ease;
+        }
+
+        .contact-overlay.active .contact-terminal {
+            transform: translateY(0);
+            opacity: 1;
+            transition-delay: 0.1s;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--fg-muted);
+        }
+
+        .terminal-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--terminal-green);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .terminal-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--fg-dim);
+        }
+
+        .terminal-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--fg-muted);
+            font-size: 0.75rem;
+            cursor: none;
+            padding: 0.5rem;
+            margin: -0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .terminal-close:hover {
+            color: var(--fg);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-field {
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.5625rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--fg-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--fg-muted);
+            color: var(--fg);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            padding: 0.75rem 0;
+            outline: none;
+            transition: border-color 0.3s ease;
+            cursor: none;
+        }
+
+        .form-input::placeholder {
+            color: var(--fg-muted);
+        }
+
+        .form-input:focus {
+            border-color: var(--fg-dim);
+        }
+
+        .form-input.textarea {
+            resize: none;
+            min-height: 80px;
+            line-height: 1.6;
+        }
+
+        .form-submit {
+            align-self: flex-start;
+            background: transparent;
+            border: 1px solid var(--fg-muted);
+            color: var(--fg-dim);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.625rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.875rem 2rem;
+            cursor: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-submit:hover {
+            border-color: var(--fg-dim);
+            color: var(--fg);
+        }
+
+        .form-submit:active {
+            transform: scale(0.98);
+        }
+
+        .form-submit.sending {
+            pointer-events: none;
+            color: var(--fg-muted);
+        }
+
+        .form-submit.sending::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            100% { left: 100%; }
+        }
+
+        /* Success State */
+        .contact-success {
+            display: none;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .contact-success.active {
+            display: block;
+        }
+
+        .contact-form.hidden {
+            display: none;
+        }
+
+        .success-icon {
+            width: 48px;
+            height: 48px;
+            border: 2px solid var(--terminal-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .success-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--terminal-green);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .success-message {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--fg-dim);
+            line-height: 1.8;
+            letter-spacing: 0.02em;
+        }
+
+        .success-message .typewriter {
+            display: inline;
         }
 
         /* System Notes Panel */
@@ -289,6 +531,14 @@
             body { cursor: default; }
             .content-layer * { cursor: default; }
             .cursor, .cursor-ring { display: none; }
+            .contact-trigger, .form-input, .form-submit, .terminal-close { cursor: default; }
+        }
+
+        @media (max-width: 600px) {
+            .content-layer { padding: 2rem; }
+            .hero { left: 2rem; max-width: calc(100% - 4rem); }
+            .product-nav { top: 2rem; right: 2rem; }
+            .contact-terminal { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -319,8 +569,45 @@
 
         <footer>
             <div class="coordinates" id="coordinates">0.000 / 0.000</div>
-            <a href="mailto:roger@grubb.net" class="contact">Contact</a>
+            <button class="contact-trigger" id="contact-trigger">Contact</button>
         </footer>
+    </div>
+
+    <!-- Contact Terminal Overlay -->
+    <div class="contact-overlay" id="contact-overlay">
+        <div class="contact-terminal">
+            <div class="terminal-header">
+                <div class="terminal-dot"></div>
+                <span class="terminal-title">Initiate Contact</span>
+                <button class="terminal-close" id="terminal-close">ESC</button>
+            </div>
+            
+            <form class="contact-form" id="contact-form" action="https://formspree.io/f/xpwzgvqk" method="POST">
+                <div class="form-field">
+                    <label class="form-label" for="contact-email">Email Address</label>
+                    <input type="email" class="form-input" id="contact-email" name="email" placeholder="your@email.com" required autocomplete="email">
+                </div>
+                
+                <div class="form-field">
+                    <label class="form-label" for="contact-message">Message</label>
+                    <textarea class="form-input textarea" id="contact-message" name="message" placeholder="What can we build together?" rows="3"></textarea>
+                </div>
+                
+                <input type="hidden" name="_subject" value="New contact from Number One Son Labs">
+                <button type="submit" class="form-submit" id="form-submit">Transmit</button>
+            </form>
+            
+            <div class="contact-success" id="contact-success">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <p class="success-message">
+                    <span class="typewriter" id="success-text"></span>
+                </p>
+            </div>
+        </div>
     </div>
 
     <div class="system-notes" id="system-notes">
@@ -370,7 +657,7 @@
             EDGE_DISTANCE_THRESHOLD: 2.8,
             BASE_ROTATION_SPEED: 0.00008,
             DAMPING: 0.92,
-            BUILD_HASH: 'c3f2a9b',
+            BUILD_HASH: 'd7e4f1c',
             SESSION_ID: crypto.randomUUID().slice(0, 8)
         };
 
@@ -393,7 +680,8 @@
             frameCount: 0,
             systemNotesOpen: false,
             perspectiveMode: 0,
-            cameraTarget: { z: 8, rotX: 0 }
+            cameraTarget: { z: 8, rotX: 0 },
+            contactOpen: false
         };
 
         // Camera perspective configurations
@@ -401,6 +689,95 @@
             { z: 8, rotX: 0.1, fov: 45, name: 'Isometric' },
             { z: 12, rotX: 0.8, fov: 60, name: 'Topographic' }
         ];
+
+        // ═══════════════════════════════════════════════════════════════
+        // CONTACT TERMINAL
+        // ═══════════════════════════════════════════════════════════════
+        
+        const contactOverlay = document.getElementById('contact-overlay');
+        const contactTrigger = document.getElementById('contact-trigger');
+        const terminalClose = document.getElementById('terminal-close');
+        const contactForm = document.getElementById('contact-form');
+        const contactSuccess = document.getElementById('contact-success');
+        const formSubmit = document.getElementById('form-submit');
+        const successText = document.getElementById('success-text');
+
+        function openContact() {
+            state.contactOpen = true;
+            contactOverlay.classList.add('active');
+            document.getElementById('contact-email').focus();
+        }
+
+        function closeContact() {
+            state.contactOpen = false;
+            contactOverlay.classList.remove('active');
+            // Reset form after animation
+            setTimeout(() => {
+                contactForm.classList.remove('hidden');
+                contactSuccess.classList.remove('active');
+                contactForm.reset();
+                formSubmit.classList.remove('sending');
+                formSubmit.textContent = 'Transmit';
+                successText.textContent = '';
+            }, 400);
+        }
+
+        function typewriterEffect(element, text, speed = 30) {
+            let i = 0;
+            element.textContent = '';
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        contactTrigger.addEventListener('click', openContact);
+        terminalClose.addEventListener('click', closeContact);
+        
+        contactOverlay.addEventListener('click', (e) => {
+            if (e.target === contactOverlay) {
+                closeContact();
+            }
+        });
+
+        // Form submission with Formspree
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            formSubmit.classList.add('sending');
+            formSubmit.textContent = 'Transmitting...';
+            
+            const formData = new FormData(contactForm);
+            
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    contactForm.classList.add('hidden');
+                    contactSuccess.classList.add('active');
+                    typewriterEffect(successText, 'Signal received. Expect response within 24h.', 35);
+                    
+                    // Auto close after message completes
+                    setTimeout(closeContact, 4500);
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                formSubmit.classList.remove('sending');
+                formSubmit.textContent = 'Retry';
+                console.error('Form submission error:', error);
+            }
+        });
 
         // ═══════════════════════════════════════════════════════════════
         // PRODUCT LINK FRAGMENT EFFECT
@@ -624,20 +1001,27 @@
                 `${state.mouse.x.toFixed(3)} / ${state.mouse.y.toFixed(3)}`;
         });
 
-        // Cursor hover state for links
-        const productLinks = document.querySelectorAll('.product-link');
-        productLinks.forEach(link => {
-            link.addEventListener('mouseenter', () => {
+        // Cursor hover state for interactive elements
+        const interactiveElements = document.querySelectorAll('.product-link, .contact-trigger, .form-submit, .terminal-close, .form-input');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
                 cursorDot.classList.add('hovering');
             });
-            link.addEventListener('mouseleave', () => {
+            el.addEventListener('mouseleave', () => {
                 cursorDot.classList.remove('hovering');
             });
         });
 
-        // Keyboard: Open system notes with 'S' key
+        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            if (e.key === 's' || e.key === 'S') {
+            // ESC to close contact
+            if (e.key === 'Escape' && state.contactOpen) {
+                closeContact();
+                return;
+            }
+            
+            // S for system notes (only when contact not open)
+            if ((e.key === 's' || e.key === 'S') && !state.contactOpen) {
                 state.systemNotesOpen = !state.systemNotesOpen;
                 document.getElementById('system-notes').classList.toggle('open', state.systemNotesOpen);
             }
