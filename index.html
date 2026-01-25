@@ -215,21 +215,24 @@
         }
 
         .contact-trigger {
-            font-size: 0.625rem;
-            font-weight: 400;
-            letter-spacing: 0.08em;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--fg-muted);
+            color: var(--fg-dim);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, border-color 0.3s ease;
             background: none;
-            border: none;
+            border: 1px solid var(--fg-muted);
+            padding: 0.75rem 1.5rem;
             cursor: none;
             font-family: inherit;
+            margin-top: 2rem;
         }
 
         .contact-trigger:hover {
-            color: var(--fg-dim);
+            color: var(--fg);
+            border-color: var(--fg-dim);
         }
 
         /* ═══════════════════════════════════════════════════════════════
@@ -565,11 +568,11 @@
                 <span class="company">Number One Son Software Development</span>
                 <span class="descriptor">We design and deploy intelligent systems.</span>
             </h1>
+            <button class="contact-trigger" id="contact-trigger">Contact</button>
         </div>
 
         <footer>
             <div class="coordinates" id="coordinates">0.000 / 0.000</div>
-            <button class="contact-trigger" id="contact-trigger">Contact</button>
         </footer>
     </div>
 
