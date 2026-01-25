@@ -585,20 +585,19 @@
                 <button class="terminal-close" id="terminal-close">ESC</button>
             </div>
             
-            <form class="contact-form" id="contact-form" action="https://formspree.io/f/xpwzgvqk" method="POST">
+            <div class="contact-form" id="contact-form">
                 <div class="form-field">
-                    <label class="form-label" for="contact-email">Email Address</label>
-                    <input type="email" class="form-input" id="contact-email" name="email" placeholder="your@email.com" required autocomplete="email">
+                    <label class="form-label" for="contact-email">Your Email</label>
+                    <input type="email" class="form-input" id="contact-email" placeholder="your@email.com" autocomplete="email">
                 </div>
                 
                 <div class="form-field">
                     <label class="form-label" for="contact-message">Message</label>
-                    <textarea class="form-input textarea" id="contact-message" name="message" placeholder="What can we build together?" rows="3"></textarea>
+                    <textarea class="form-input textarea" id="contact-message" placeholder="What can we build together?" rows="3"></textarea>
                 </div>
                 
-                <input type="hidden" name="_subject" value="New contact from Number One Son Labs">
-                <button type="submit" class="form-submit" id="form-submit">Transmit</button>
-            </form>
+                <button type="button" class="form-submit" id="form-submit">Transmit</button>
+            </div>
             
             <div class="contact-success" id="contact-success">
                 <div class="success-icon">
@@ -747,39 +746,35 @@
             }
         });
 
-        // Form submission with Formspree
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // Form submission with mailto
+        formSubmit.addEventListener('click', () => {
+            const email = document.getElementById('contact-email').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+            
+            if (!email) {
+                document.getElementById('contact-email').focus();
+                return;
+            }
             
             formSubmit.classList.add('sending');
             formSubmit.textContent = 'Transmitting...';
             
-            const formData = new FormData(contactForm);
+            // Build mailto link
+            const subject = encodeURIComponent('Contact from Number One Son Labs');
+            const body = encodeURIComponent(`From: ${email}\n\n${message || 'No message provided.'}`);
             
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
+            // Small delay for visual feedback
+            setTimeout(() => {
+                window.location.href = `mailto:roger@grubb.net?subject=${subject}&body=${body}`;
                 
-                if (response.ok) {
-                    contactForm.classList.add('hidden');
-                    contactSuccess.classList.add('active');
-                    typewriterEffect(successText, 'Signal received. Expect response within 24h.', 35);
-                    
-                    // Auto close after message completes
-                    setTimeout(closeContact, 4500);
-                } else {
-                    throw new Error('Submission failed');
-                }
-            } catch (error) {
-                formSubmit.classList.remove('sending');
-                formSubmit.textContent = 'Retry';
-                console.error('Form submission error:', error);
-            }
+                // Show success state
+                contactForm.classList.add('hidden');
+                contactSuccess.classList.add('active');
+                typewriterEffect(successText, 'Email client opened. Send to complete.', 35);
+                
+                // Auto close after message
+                setTimeout(closeContact, 4000);
+            }, 600);
         });
 
         // ═══════════════════════════════════════════════════════════════
