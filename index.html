@@ -173,12 +173,62 @@
             text-decoration: none;
             cursor: none;
             position: relative;
-            padding: 0.25rem 0;
-            transition: color 0.3s ease;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
         }
 
         .product-link:hover {
             color: var(--fg);
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(-4px);
+            box-shadow: 2px 0 0 0 var(--terminal-green);
+        }
+
+        /* FREE product — top of list, glowing, unmissable */
+        .product-link--free {
+            color: #e8b955;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            background: rgba(232, 185, 85, 0.08);
+            border: 1px solid rgba(232, 185, 85, 0.2);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            animation: freeGlow 3s ease-in-out infinite;
+        }
+
+        .product-link--free:hover {
+            color: #fff;
+            background: rgba(232, 185, 85, 0.18);
+            border-color: rgba(232, 185, 85, 0.5);
+            box-shadow: 0 0 15px rgba(232, 185, 85, 0.3), 0 0 30px rgba(232, 185, 85, 0.1);
+            transform: translateX(-6px) scale(1.02);
+        }
+
+        @keyframes freeGlow {
+            0%, 100% { 
+                box-shadow: 0 0 8px rgba(232, 185, 85, 0.1);
+                border-color: rgba(232, 185, 85, 0.2);
+            }
+            50% { 
+                box-shadow: 0 0 16px rgba(232, 185, 85, 0.25), 0 0 32px rgba(232, 185, 85, 0.08);
+                border-color: rgba(232, 185, 85, 0.4);
+            }
+        }
+
+        .free-badge {
+            display: inline-block;
+            font-size: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #0a0a0b;
+            background: #4ade80;
+            padding: 1px 5px;
+            border-radius: 3px;
+            margin-left: 6px;
+            vertical-align: middle;
+            line-height: 1.4;
         }
 
         .product-link .char {
@@ -555,13 +605,13 @@
         <header>
             <div class="wordmark">Number One Son<br>Software Development</div>
             <nav class="product-nav" id="product-nav">
+                <a href="https://github.com/rogergrubb/NumberOneSonFreebieClaudeGasGaugeChromeExt" target="_blank" class="product-link product-link--free" data-text="Claude Gas Gauge">⛽ Claude Gas Gauge <span class="free-badge">FREE</span></a>
                 <a href="https://recoverylock.app" target="_blank" class="product-link" data-text="RecoveryLock">RecoveryLock</a>
                 <a href="https://brainforge.tech" target="_blank" class="product-link" data-text="BrainForge">BrainForge</a>
                 <a href="https://bookfactory.cafe" target="_blank" class="product-link" data-text="BookFactory">BookFactory</a>
                 <a href="https://papervault.one" target="_blank" class="product-link" data-text="PaperVault">PaperVault</a>
                 <a href="https://mapandmingle.com" target="_blank" class="product-link" data-text="Map &amp; Mingle">Map & Mingle</a>
                 <a href="https://anyone.cafe" target="_blank" class="product-link" data-text="Anyone.Cafe">Anyone.Cafe</a>
-                <a href="https://github.com/rogergrubb/NumberOneSonFreebieClaudeGasGaugeChromeExt" target="_blank" class="product-link" data-text="Gas Gauge">Gas Gauge</a>
             </nav>
         </header>
 
@@ -667,13 +717,13 @@
 
         // Product data
         const PRODUCTS = [
+            { name: 'Claude Gas Gauge', url: 'https://github.com/rogergrubb/NumberOneSonFreebieClaudeGasGaugeChromeExt' },
             { name: 'RecoveryLock', url: 'https://recoverylock.app' },
             { name: 'BrainForge', url: 'https://brainforge.tech' },
             { name: 'BookFactory', url: 'https://bookfactory.cafe' },
             { name: 'PaperVault', url: 'https://papervault.one' },
             { name: 'Map & Mingle', url: 'https://mapandmingle.com' },
-            { name: 'Anyone.Cafe', url: 'https://anyone.cafe' },
-            { name: 'Gas Gauge', url: 'https://github.com/rogergrubb/NumberOneSonFreebieClaudeGasGaugeChromeExt' }
+            { name: 'Anyone.Cafe', url: 'https://anyone.cafe' }
         ];
 
         // ═══════════════════════════════════════════════════════════════
