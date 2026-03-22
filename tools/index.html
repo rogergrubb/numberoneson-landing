@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses & Tools | Number One Son Software</title>
+    <meta name="description" content="Digital courses and tools from Number One Son Software Development. Beat Wall Street, AI Chief of Staff Playbook, and more.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        :root {
+            --bg: #0a0a0b;
+            --bg-card: #111113;
+            --bg-card-hover: #18181b;
+            --fg: #e8e8e8;
+            --fg-dim: #888888;
+            --fg-muted: #555555;
+            --accent: #4ade80;
+            --accent-gold: #e8b955;
+            --border: #2a2a2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: 'Inter', -apple-system, sans-serif;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 3rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--fg-muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--fg);
+        }
+
+        .wordmark {
+            font-size: 0.6875rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--fg-muted);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .page-title {
+            font-size: 0.6875rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--fg-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .page-headline {
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            color: var(--fg);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .page-subhead {
+            font-size: 1rem;
+            color: var(--fg-dim);
+            margin-bottom: 4rem;
+            max-width: 500px;
+        }
+
+        /* Product Grid */
+        .products {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .product-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--fg-muted);
+            transform: translateY(-2px);
+        }
+
+        .product-badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.5625rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .badge-course {
+            background: rgba(74, 222, 128, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+
+        .badge-free {
+            background: rgba(232, 185, 85, 0.15);
+            color: var(--accent-gold);
+            border: 1px solid rgba(232, 185, 85, 0.3);
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--fg);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .product-description {
+            font-size: 0.9375rem;
+            color: var(--fg-dim);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            color: var(--fg-muted);
+        }
+
+        .product-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--fg);
+            letter-spacing: -0.02em;
+        }
+
+        .price-free {
+            color: var(--accent);
+        }
+
+        .buy-button {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid var(--fg-muted);
+            color: var(--fg-dim);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: 1rem;
+        }
+
+        .buy-button:hover {
+            border-color: var(--fg);
+            color: var(--fg);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Divider */
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 4rem 0;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.625rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--fg-muted);
+            margin-bottom: 2rem;
+        }
+
+        /* Coming Soon */
+        .coming-soon {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .coming-item {
+            font-size: 0.8125rem;
+            color: var(--fg-muted);
+            padding: 0.5rem 1rem;
+            border: 1px dashed var(--border);
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 3rem;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.625rem;
+            color: var(--fg-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-text a {
+            color: var(--fg-dim);
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            color: var(--fg);
+        }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            header {
+                padding: 1.5rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            main {
+                padding: 2rem 1.5rem;
+            }
+
+            .page-headline {
+                font-size: 1.5rem;
+            }
+
+            .product-card {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .product-price {
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .buy-button {
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="back-link">← Back to Portfolio</a>
+        <div class="wordmark">Number One Son</div>
+    </header>
+
+    <main>
+        <p class="page-title">Courses & Tools</p>
+        <h1 class="page-headline">What we learned building companies,<br>distilled into courses.</h1>
+        <p class="page-subhead">Real lessons from real products. No fluff. No theory. Just what works.</p>
+
+        <div class="products">
+            <!-- Beat Wall Street -->
+            <article class="product-card">
+                <div class="product-content">
+                    <span class="product-badge badge-course">Course</span>
+                    <h2 class="product-title">Beat Wall Street</h2>
+                    <p class="product-description">
+                        The game is rigged. Now learn how to play it anyway. Track congressional trades, 
+                        hedge fund 13F filings, dark pool volume, and options flow — all using free public data.
+                    </p>
+                    <div class="product-meta">
+                        <span>7 Modules</span>
+                        <span>50+ Free Tools Directory</span>
+                        <span>30-Day Guarantee</span>
+                    </div>
+                </div>
+                <div class="product-price">
+                    <span class="price">$149</span>
+                    <a href="https://numberoneson.gumroad.com/l/yodpvi" class="buy-button" target="_blank">Get Access</a>
+                </div>
+            </article>
+
+            <!-- AI Chief of Staff -->
+            <article class="product-card">
+                <div class="product-content">
+                    <span class="product-badge badge-course">Course</span>
+                    <h2 class="product-title">AI Chief of Staff Playbook</h2>
+                    <p class="product-description">
+                        How to deploy an AI agent that handles your email, calendar, research, and operations. 
+                        The exact system we use to run a software company with zero employees.
+                    </p>
+                    <div class="product-meta">
+                        <span>6 Modules</span>
+                        <span>Templates Included</span>
+                        <span>30-Day Guarantee</span>
+                    </div>
+                </div>
+                <div class="product-price">
+                    <span class="price">$97</span>
+                    <a href="https://numberoneson.gumroad.com/l/ai-chief-of-staff" class="buy-button" target="_blank">Get Access</a>
+                </div>
+            </article>
+
+            <!-- Congress Tracker - Free -->
+            <article class="product-card">
+                <div class="product-content">
+                    <span class="product-badge badge-free">Free Tool</span>
+                    <h2 class="product-title">Congress Stock Tracker</h2>
+                    <p class="product-description">
+                        See what Congress is trading before they file. Updated daily with the latest 
+                        STOCK Act disclosures. No signup required.
+                    </p>
+                    <div class="product-meta">
+                        <span>Updated Daily</span>
+                        <span>No Signup</span>
+                    </div>
+                </div>
+                <div class="product-price">
+                    <span class="price price-free">Free</span>
+                    <a href="#" class="buy-button">Coming Soon</a>
+                </div>
+            </article>
+        </div>
+
+        <hr class="section-divider">
+
+        <p class="section-label">Coming Soon</p>
+        <div class="coming-soon">
+            <span class="coming-item">50 Questions for Grandparents</span>
+            <span class="coming-item">The MEANING Book</span>
+            <span class="coming-item">Bootstrapped to $1B Playbook</span>
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer-text">
+            Built by <a href="/">Number One Son Software Development</a> · 
+            <a href="https://numberoneson.gumroad.com" target="_blank">Gumroad</a> · 
+            <a href="https://x.com/GrubbHomes" target="_blank">@GrubbHomes</a>
+        </p>
+    </footer>
+</body>
+</html>
